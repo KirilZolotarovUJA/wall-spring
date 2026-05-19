@@ -7,8 +7,12 @@ import jakarta.validation.constraints.Size
 
 @Entity
 class Poster(
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false, unique = true, length = 32)
     var username: String = "",
+
+    @JsonIgnore
+    @Column(nullable = false)
+    var password: String = "",
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +38,8 @@ data class PosterCreateRequest(
     @field:NotBlank
     @field:Size(max = 32)
     val username: String? = null,
+
+    @field:NotBlank
+    @field:Size(max = 72)
+    val password: String? = null,
 )

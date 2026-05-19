@@ -5,19 +5,23 @@ import es.ujaen.wall.model.Poster
 import es.ujaen.wall.model.PosterCreateRequest
 import es.ujaen.wall.repository.PosterRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class PosterService(private val posterRepository: PosterRepository) {
+class PosterService(
+    private val posterRepository: PosterRepository,
+    private val passwordEncoder: PasswordEncoder,
+) {
     fun getAllPosters(): List<Poster> {
         return posterRepository.findAll()
     }
 
     @Transactional
     fun createPoster(request: PosterCreateRequest): Poster {
-        val (username) = request
-        return posterRepository.save(Poster(username!!))
+        val (username, password) = request
+        return posterRepository.save(Poster(username!!, passwordEncoder.encode(password!!)!!))
     }
 
     fun getPosterById(id: Long): Poster {

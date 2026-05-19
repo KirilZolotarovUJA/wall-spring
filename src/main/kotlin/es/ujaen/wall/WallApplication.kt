@@ -8,13 +8,18 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @SpringBootApplication
 class WallApplication {
     @Bean
-    fun seedRunner(postRepository: PostRepository, posterRepository: PosterRepository): CommandLineRunner {
+    fun seedRunner(
+        postRepository: PostRepository,
+        posterRepository: PosterRepository,
+        passwordEncoder: PasswordEncoder,
+    ): CommandLineRunner {
         return CommandLineRunner { _: Array<String> ->
-            val poster = Poster("CyZ")
+            val poster = Poster("CyZ", passwordEncoder.encode("password")!!)
             val post = Post(poster = poster, content = "Hello, world!")
 
             posterRepository.save(poster)

@@ -5,4 +5,6 @@ import org.springframework.data.repository.ListCrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface PosterRepository : ListCrudRepository<Poster, Long>
+interface PosterRepository : ListCrudRepository<Poster, Long> {
+    fun findByUsername(username: String): Poster?
+}
