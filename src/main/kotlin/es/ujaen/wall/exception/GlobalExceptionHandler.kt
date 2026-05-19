@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
-    @ExceptionHandler(PostNotFoundException::class)
+    @ExceptionHandler(DomainException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun handlePostNotFoundException(ex: PostNotFoundException): Map<String, String> =
+    fun handleDomainException(ex: DomainException): Map<String, String> =
         mapOf("message" to ex.message!!)
 
 }
