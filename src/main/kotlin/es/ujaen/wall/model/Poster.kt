@@ -1,5 +1,6 @@
 package es.ujaen.wall.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -12,6 +13,10 @@ class Poster(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
+
+    @OneToMany(mappedBy = "poster", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JsonIgnore
+    var posts: MutableList<Post> = mutableListOf(),
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -28,5 +33,5 @@ class Poster(
 data class PosterCreateRequest(
     @field:NotBlank
     @field:Size(max = 32)
-    val username: String = "",
+    val username: String? = null,
 )

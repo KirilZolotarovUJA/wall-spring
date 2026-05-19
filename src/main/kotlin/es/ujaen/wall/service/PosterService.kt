@@ -17,7 +17,7 @@ class PosterService(private val posterRepository: PosterRepository) {
     @Transactional
     fun createPoster(request: PosterCreateRequest): Poster {
         val (username) = request
-        return posterRepository.save(Poster(username))
+        return posterRepository.save(Poster(username!!))
     }
 
     fun getPosterById(id: Long): Poster {
