@@ -12,28 +12,16 @@ import org.springframework.context.annotation.Bean
 @SpringBootApplication
 class WallApplication {
     @Bean
-    fun posterRunner(repository: PosterRepository): CommandLineRunner {
+    fun seedRunner(postRepository: PostRepository, posterRepository: PosterRepository): CommandLineRunner {
         return CommandLineRunner { _: Array<String> ->
             val poster = Poster("CyZ")
+            val post = Post(poster = poster, content = "Hello, world!")
 
-            repository.save(poster)
+            posterRepository.save(poster)
+            postRepository.save(post)
+
             println(poster)
-
-            val saved: Poster? = repository.findById(poster.id!!).orElseThrow { NoSuchElementException() }
-            println(saved)
-        }
-    }
-
-    @Bean
-    fun postRunner(repository: PostRepository): CommandLineRunner {
-        return CommandLineRunner { _: Array<String> ->
-            val post = Post("CyZ", "Hello, world!")
-
-            repository.save(post)
             println(post)
-
-            val saved: Post? = repository.findById(post.id!!).orElseThrow { NoSuchElementException() }
-            println(saved)
         }
     }
 }
